@@ -13,18 +13,22 @@ Tipos de parametros:
     Request Body: Corpo da requisição, utilizado para criar ou alterar recursos
 */
 
-const express = require('express')
+const express = require("express");
 const app = express();
-const routes = require('./routes')
+const cors = require("cors");
+const routes = require("./routes");
 
 const port = 3333 || process.env.PORT;
 
+app.use(cors());
 app.use(express.json());
 
 app.use(routes);
 
 app.listen(port, err => {
-    if (err) console.log(`Erro ao iniciar o servidor: --> ${err}`)
+  if (err) console.log(`Erro ao iniciar o servidor: --> ${err}`);
 
-    return console.log(`Servidor online: *porta: ${port}* acesse http://localhost:${port}`)
+  return console.log(
+    `Servidor online: *porta: ${port}* acesse http://localhost:${port}`
+  );
 });
