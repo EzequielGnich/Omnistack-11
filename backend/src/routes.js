@@ -1,28 +1,20 @@
-const express = require('express');
-const crypto = require('crypto');
-
+const express = require("express");
 const routes = express.Router();
 
-const connection = require('./database/connection');
+const OngController = require("./controllers/OngController");
+const IncidentController = require("./controllers/IncidentController");
+const ProfileController = require("./controllers/ProfileController");
+const SessionController = require("./controllers/SessionController");
 
-routes.get('/ongs', async (req, res) => {
-    const ongs = await connection('ongs').select('*');
+routes.post("/sessions", SessionController.create);
 
-    if (!ongs[0]) return res.json({ msg: "Não existem ongs cadastradas no banco de dados"}) 
+routes.get("/profile", ProfileController.index);
 
-    return res.json({ongs});
-});
+routes.get("/ongs", OngController.index);
+routes.post("/ongs", OngController.create);
 
-routes.post('/ongs', async (req, res) => {
-    const { name, email, whatsapp, city, uf } = req.body;
-
-    const id = crypto.randomBytes(4).toString('HEX');
-
-    await connection('ongs').insert({
-        id, name, email, whatsapp, city, uf
-    });
-
-    return res.json({ id });
-})
+routes.get("/incidents", IncidentController.index);
+routes.post("/incidents", IncidentController.create);
+routes.delete("/incidents/:id", IncidentController.delete);
 
 module.exports = routes;
