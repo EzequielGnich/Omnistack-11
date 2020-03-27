@@ -19,11 +19,11 @@ module.exports = {
         "ongs.uf"
       ]);
 
-    res.header("X-Total-Count", count["count(*)"]);
-
-    if (!incidents[0])
-      return res.json({
-        msg: "Não existem casos cadastradas no banco de dados"
+      res.header("X-Total-Count", count["count(*)"]);
+      
+      if (!incidents[0])
+        return res.json({
+          msg: "Não existem casos cadastradas no banco de dados"
       });
 
     return res.json(incidents);
